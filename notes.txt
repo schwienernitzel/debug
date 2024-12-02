@@ -1,0 +1,34 @@
+for lib in $(ls | grep .so); do dlopener "$lib"; done
+for i in *.so; do /system/bin/dlopen32 "$i"; done
+for i in *.so; do /system/bin/dlopen64 "$i"; done
+
+adb logcat *:E
+
+sudo chmod -R 777 *
+sudo chown -R schwiener:schwiener *
+
+# Broswer crash logcat
+12-02 00:06:45.410  2697  3076 E Fence   : Throttling EGL Production: fence 33 didn't signal in 3000 ms
+12-02 00:06:47.003  2697  3075 W SurfaceFlinger: setTransactionState timed out waiting for previous animation frame
+12-02 00:06:52.005  2697  4157 W SurfaceFlinger: setTransactionState timed out waiting for previous animation frame
+
+12-02 07:14:07.891  5337  5401 E libEGL  : validate_display:99 error 3008 (EGL_BAD_DISPLAY)
+
+12-02 07:14:11.056  2695  2695 D graphic : #00 pc 000000000000c454  /system/lib64/libutils.so (_ZN7android9CallStackC2EPKci+92)
+12-02 07:14:11.056  2695  2695 D graphic : #01 pc 0000000000430ed8  /system/vendor/lib64/egl/libGLES_mali.so
+12-02 07:14:11.056  2695  2695 D graphic : #02 pc 0000000000665834  /system/vendor/lib64/egl/libGLES_mali.so
+12-02 07:14:11.056  2695  2695 D graphic : #03 pc 0000000000004370  /system/lib64/hw/gralloc.hi3635.so (_Z19compositionCompleteP20framebuffer_device_t+8)
+12-02 07:14:11.056  2695  2695 D graphic : #04 pc 00000000000472b4  /system/lib64/libsurfaceflinger.so
+12-02 07:14:11.056  2695  2695 D graphic : #05 pc 0000000000046128  /system/lib64/libsurfaceflinger.so
+12-02 07:14:11.056  2695  2695 D graphic : #06 pc 0000000000045ee0  /system/lib64/libsurfaceflinger.so
+12-02 07:14:11.056  2695  2695 D graphic : #07 pc 0000000000018414  /system/lib64/libutils.so (_ZN7android6Looper9pollInnerEi+764)
+12-02 07:14:11.056  2695  2695 D graphic : #08 pc 0000000000018058  /system/lib64/libutils.so (_ZN7android6Looper8pollOnceEiPiS1_PPv+60)
+12-02 07:14:11.056  2695  2695 D graphic : #09 pc 0000000000035d54  /system/lib64/libsurfaceflinger.so
+12-02 07:14:11.056  2695  2695 D graphic : #10 pc 00000000000458d0  /system/lib64/libsurfaceflinger.so (_ZN7android14SurfaceFlinger3runEv+20)
+12-02 07:14:11.056  2695  2695 D graphic : #11 pc 0000000000001538  /system/bin/surfaceflinger
+12-02 07:14:11.056  2695  2695 D graphic : #12 pc 000000000001a654  /system/lib64/libc.so (__libc_init+88)
+12-02 07:14:11.056  2695  2695 D graphic : #13 pc 0000000000001268  /system/bin/surfaceflinger
+12-02 07:14:11.060  2695  2695 E ConsumerBase: [org.lineageos.jelly/org.lineageos.jelly.MainActivity] fence has invalid state
+12-02 07:14:11.060  2695  2695 E GLConsumer: [org.lineageos.jelly/org.lineageos.jelly.MainActivity] syncForReleaseLocked: error adding release fence: Invalid argument (-22)
+12-02 07:14:11.060  2695  2695 W GLConsumer: [org.lineageos.jelly/org.lineageos.jelly.MainActivity] bindTextureImage: clearing GL error: 0x505
+12-02 07:14:11.066  2695  2695 E         : mali gles error info : 3, error: 6
